@@ -1,5 +1,44 @@
 #include "maze.h"
 
+/* Initialize textures and untextured arrays */
+SDL_Texture *textures[TEX_COUNT];
+SDL_Texture *untextured[TEX_COUNT];
+weapon_t weapon;
+
+
+/**
+ * loadWeapon - loads the weapon texture
+ * @file: path to the weapon texture file
+ * Return: True on success, False on failure
+ */
+bool loadWeapon(const char *file)
+{
+    SDL_Surface *loadedSurface = IMG_Load(file);
+    if (!loadedSurface)
+    {
+        printf("Unable to load image %s! SDL_image Error: %s\n", file, IMG_GetError());
+        return false;
+    }
+
+    weapon.texture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+    SDL_FreeSurface(loadedSurface);
+
+    if (!weapon.texture)
+    {
+        printf("Unable to create texture from %s! SDL Error: %s\n", file, SDL_GetError());
+        return false;
+    }
+
+    // Set weapon position
+    weapon.position.x = SCREEN_WIDTH / 2 - 50;
+    weapon.position.y = SCREEN_HEIGHT - 150;
+    weapon.position.w = 100;
+    weapon.position.h = 100;
+
+    return true;
+}
+
+
 /**
  * initSDL - initializes SDL, window, and renderer
  * Return: True on success, False on failure
@@ -39,6 +78,11 @@ bool initSDL(void)
 		printf("Texture could not be initialized! SDL_Error: %s\n", SDL_GetError());
 		success = false;
 	}
+	if (!loadWeapon("textures/gun.png"))
+	{
+	        success = false;
+	}
+
 	return (success);
 }
 
@@ -61,10 +105,11 @@ void updateRenderer(bool textured)
 		/* clear buffer */
 		for (x = 0; x < SCREEN_WIDTH; x++)
 			for (y = 0; y < SCREEN_HEIGHT; y++)
-				buffer[y][x] = 0;
+			    buffer[y][x] = 0;
 	}
 
 	/* update screen */
+	SDL_RenderCopy(renderer, weapon.texture, NULL, &weapon.position);
 	SDL_RenderPresent(renderer);
 }
 
@@ -74,8 +119,32 @@ void updateRenderer(bool textured)
  */
 void closeSDL(void)
 {
-	SDL_DestroyTexture(texture);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+    // Free textures
+    for (int i = 0; i < TEX_COUNT; i++)
+    {
+        if (textures[i] != NULL)
+	{
+            SDL_DestroyTexture(textures[i]);
+            textures[i] = NULL;
+        }
+
+        if (untextured[i] != NULL)
+	{
+            SDL_DestroyTexture(untextured[i]);
+            untextured[i] = NULL;
+        }
+    }
+
+    // Free weapon texture
+    if (weapon.texture != NULL)
+    {
+        SDL_DestroyTexture(weapon.texture);
+        weapon.texture = NULL;
+    }
+
+    SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    IMG_Quit();
+    SDL_Quit();
 }

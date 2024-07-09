@@ -28,4 +28,7 @@ extern point_t plane;
 /* time of current frame */
 extern double time;
 
+/*weapon textture */
+extern weapon_t weapon;
+
 #endif /* GLOBAL_H */

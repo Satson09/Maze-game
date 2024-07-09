@@ -34,6 +34,10 @@ bool initSDL(void);
 void updateRenderer(bool textured);
 void closeSDL(void);
 
+bool loadWeapon(const char *file); // New function declaration
+void renderWeapon(void);
+void shootWeapon(void);
+
 void input(int *maze);
 bool quit(void);
 

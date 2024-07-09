@@ -197,3 +197,8 @@ void renderBGFlat(void)
 	SDL_SetRenderDrawColor(renderer, 0x1E, 0x29, 0x34, 0xFF);
 	SDL_RenderFillRect(renderer, &floor);
 }
+
+void renderWeapon(void)
+{
+    SDL_RenderCopy(renderer, weapon.texture, NULL, &weapon.position);
+}

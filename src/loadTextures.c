@@ -13,11 +13,11 @@ void loadTextures(char *mapName)
 
 	if (strcmp(mapName, "maps/map_0") == 0)
 	{
-		texSrc[0] = IMG_Load("textures/wall1.jpeg");
-		texSrc[1] = IMG_Load("textures/wall2.jpeg");
+		texSrc[0] = IMG_Load("textures/wall1.png");
+		texSrc[1] = IMG_Load("textures/wall2.png");
 		texSrc[2] = IMG_Load("textures/windowtree.png");
 		texSrc[3] = IMG_Load("textures/windowspooky.png");
-		texSrc[4] = IMG_Load("textures/cloud ceiling.png");
+		texSrc[4] = IMG_Load("textures/ceiling.png");
 		texSrc[5] = IMG_Load("textures/grass.png");
 	}
 	else
