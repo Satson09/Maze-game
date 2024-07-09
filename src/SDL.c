@@ -78,7 +78,7 @@ bool initSDL(void)
 		printf("Texture could not be initialized! SDL_Error: %s\n", SDL_GetError());
 		success = false;
 	}
-	if (!loadWeapon("textures/gun.png"))
+	if (!loadWeapon("textures/gun1.png"))
 	{
 	        success = false;
 	}

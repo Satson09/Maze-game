@@ -79,7 +79,7 @@ void input(int *maze)
     }
 
     /* rotate left */
-    if (keystate[SDL_SCANCODE_A] || keystate[SDL_SCANCODE_LEFT])
+    if (keystate[SDL_SCANCODE_D] || keystate[SDL_SCANCODE_RIGHT])
     {
         /* rotate camera direction */
         oldDirX = dir.x;
@@ -93,7 +93,7 @@ void input(int *maze)
     }
 
     /* rotate right */
-    if (keystate[SDL_SCANCODE_D] || keystate[SDL_SCANCODE_RIGHT])
+    if (keystate[SDL_SCANCODE_A] || keystate[SDL_SCANCODE_LEFT])
     {
         /* rotate camera direction */
         oldDirX = dir.x;

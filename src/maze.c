@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     }
 
     /* load weapon texture */
-    if (!loadWeapon("textures/gun.png"))
+    if (!loadWeapon("textures/gun1.png"))
     {
         fprintf(stderr, "Failed to load weapon texture\n");
         return (1);
