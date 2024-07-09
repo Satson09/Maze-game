@@ -17,7 +17,7 @@ void loadTextures(char *mapName)
 		texSrc[1] = IMG_Load("textures/wall2.png");
 		texSrc[2] = IMG_Load("textures/windowtree.png");
 		texSrc[3] = IMG_Load("textures/windowspooky.png");
-		texSrc[4] = IMG_Load("textures/ceiling.png");
+		texSrc[4] = IMG_Load("textures/skybox.png");
 		texSrc[5] = IMG_Load("textures/grass.png");
 	}
 	else
