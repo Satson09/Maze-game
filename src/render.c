@@ -198,7 +198,28 @@ void renderBGFlat(void)
 	SDL_RenderFillRect(renderer, &floor);
 }
 
+/**
+ * renderWeapon - Renders the weapon and muzzle flash if active.
+ *
+ * Return: void
+ */
+
 void renderWeapon(void)
 {
     SDL_RenderCopy(renderer, weapon.texture, NULL, &weapon.position);
+    if (muzzleFlashActive && SDL_GetTicks() < muzzleFlashEndTime)
+    {
+        SDL_Rect flashPosition = {
+            weapon.position.x + weapon.position.w / 2 - 32,
+            weapon.position.y - 64,
+            64,
+            64
+        };
+        SDL_RenderCopy(renderer, muzzleFlashTexture, NULL, &flashPosition);
+	printf("Rendering muzzle flash at: %d\n", SDL_GetTicks());
+    }
+    else
+    {
+        muzzleFlashActive = false;
+    }
 }

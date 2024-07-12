@@ -4,6 +4,10 @@
 SDL_Texture *textures[TEX_COUNT];
 SDL_Texture *untextured[TEX_COUNT];
 weapon_t weapon;
+/* Muzzle flash variables */
+bool muzzleFlashActive = false;
+Uint32 muzzleFlashEndTime = 0;
+SDL_Texture *muzzleFlashTexture = NULL;
 
 
 /**
@@ -34,6 +38,33 @@ bool loadWeapon(const char *file)
     weapon.position.y = SCREEN_HEIGHT - 150;
     weapon.position.w = 100;
     weapon.position.h = 100;
+
+
+    return true;
+}
+
+/**
+ * loadMuzzleFlash - loads the muzzleflash texture
+ * @file: path to the muzzleflash texture file
+ * Return: True on success, False on failure
+ */
+bool loadMuzzleFlash(const char *file)
+{
+    SDL_Surface *loadedSurface = IMG_Load(file);
+    if (!loadedSurface)
+    {
+        printf("Unable to load image %s! SDL_image Error: %s\n", file, IMG_GetError());
+        return false;
+    }
+
+    muzzleFlashTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+    SDL_FreeSurface(loadedSurface);
+
+    if (!muzzleFlashTexture)
+    {
+        printf("Unable to create texture from %s! SDL Error: %s\n", file, SDL_GetError());
+        return false;
+    }
 
     return true;
 }
@@ -140,6 +171,13 @@ void closeSDL(void)
     {
         SDL_DestroyTexture(weapon.texture);
         weapon.texture = NULL;
+    }
+
+     // Free muzzleFlash texture
+    if (muzzleFlashTexture != NULL)
+    {
+        SDL_DestroyTexture(muzzleFlashTexture);
+        muzzleFlashTexture = NULL;
     }
 
     SDL_DestroyTexture(texture);

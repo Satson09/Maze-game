@@ -12,6 +12,11 @@ void shootWeapon(void)
         weapon.lastFired = time;
         printf("Weapon fired! Ammo left: %d\n", weapon.ammo);
         // Add more weapon firing logic here, such as checking for hits
+
+	// Activate muzzle flash
+        muzzleFlashActive = true;
+        muzzleFlashEndTime = SDL_GetTicks() + 100; // Flash for 100 milliseconds
+	printf("Muzzle flash activated at: %d\n", SDL_GetTicks());
     }
 }
 

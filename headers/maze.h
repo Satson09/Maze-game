@@ -37,6 +37,9 @@ void closeSDL(void);
 bool loadWeapon(const char *file); // New function declaration
 void renderWeapon(void);
 void shootWeapon(void);
+bool loadMuzzleFlash(const char *file);
+
+void renderMinimap(int *maze);
 
 void input(int *maze);
 bool quit(void);

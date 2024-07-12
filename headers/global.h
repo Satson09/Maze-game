@@ -1,6 +1,12 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+
+/* Muzzle flash variables */
+extern bool muzzleFlashActive;
+extern Uint32 muzzleFlashEndTime;
+extern SDL_Texture *muzzleFlashTexture;
+
 /* render window */
 extern SDL_Window *window;
 
@@ -15,6 +21,8 @@ extern uint32_t buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 
 /* array of textures */
 extern uint32_t tiles[TEX_COUNT][TEX_HEIGHT][TEX_WIDTH];
+
+extern bool minimapEnabled;
 
 /* X and Y start position */
 extern point_t pos;

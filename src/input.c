@@ -5,6 +5,7 @@
  * @maze: 2D array defining maze map
  * Return: void
  */
+
 void input(int *maze)
 {
     SDL_Event event;
@@ -35,6 +36,9 @@ void input(int *maze)
             {
             case SDLK_SPACE:
                 shootWeapon();
+                break;
+	    case SDLK_m:
+                minimapEnabled = !minimapEnabled;
                 break;
             default:
                 break;
@@ -106,6 +110,7 @@ void input(int *maze)
         plane.y = oldPlaneX * sin(-rotSpeed) + plane.y * cos(-rotSpeed);
     }
 }
+
 
 /**
  * quit - checks if user quits

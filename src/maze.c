@@ -95,6 +95,17 @@ int main(int argc, char *argv[])
         return (1);
     }
 
+    /* load muzzle flash texture */
+    if (!loadMuzzleFlash("textures/muzzle-flash.png"))
+    {
+        fprintf(stderr, "Failed to load muzzle flash texture\n");
+        return (1);
+    }
+    else
+    {
+	printf("Muzzle flash texture loaded successfully\n");
+    }
+
     /* loops until user exits by ESC or closing window */
     while (!quit())
     {
@@ -109,6 +120,16 @@ int main(int argc, char *argv[])
         /* render weapon */
         if (textured)
             renderWeapon();
+
+	/* render minimap */
+        renderMinimap(maze);
+
+	/*if (minimapEnabled)
+	{
+            drawMinimap(maze);
+        }
+
+        SDL_Delay(16); // Approximately 60 frames per second */
 
         /* Update the screen */
         SDL_RenderPresent(renderer);
