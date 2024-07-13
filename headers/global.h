@@ -2,10 +2,24 @@
 #define GLOBAL_H
 
 
-/* Muzzle flash variables */
-extern bool muzzleFlashActive;
-extern Uint32 muzzleFlashEndTime;
+/* texture for muzzle flash */
+SDL_Texture *muzzleFlashTexture;
+
+/* flag to indicate muzzle flash visibility */
+bool muzzleFlashActive;
+
+/* end time for muzzle flash duration */
+Uint32 muzzleFlashEndTime;
+
+/* texture for muzzle flash */
 extern SDL_Texture *muzzleFlashTexture;
+
+/* flag to indicate muzzle flash visibility */
+extern bool muzzleFlashActive;
+
+/* end time for muzzle flash duration */
+extern Uint32 muzzleFlashEndTime;
+
 
 /* render window */
 extern SDL_Window *window;

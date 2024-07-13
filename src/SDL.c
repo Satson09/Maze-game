@@ -87,6 +87,13 @@ bool initSDL(void)
 		success = false;
 	}
 
+	// Initialize SDL_image
+	if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+	{
+		printf("Failed to initialize SDL_image! IMG_Error: %s\n", IMG_GetError());
+		success = false;
+	}
+
 	window = SDL_CreateWindow("Maze-Game", SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (window == NULL)
@@ -109,9 +116,15 @@ bool initSDL(void)
 		printf("Texture could not be initialized! SDL_Error: %s\n", SDL_GetError());
 		success = false;
 	}
+
 	if (!loadWeapon("textures/gun1.png"))
 	{
 	        success = false;
+	}
+
+	if (!loadMuzzleFlash("textures/muzzle-flash.png"))
+	{
+		success = false;
 	}
 
 	return (success);
@@ -122,27 +135,45 @@ bool initSDL(void)
  * @textured: True if user enabled textures, otherwise False
  * Return: void
  */
+
 void updateRenderer(bool textured)
 {
-	int x, y; /* loop counters */
+    int x, y; /* loop counters */
 
-	/* draw buffer to renderer */
-	if (textured)
-	{
-		SDL_UpdateTexture(texture, NULL, buffer, SCREEN_WIDTH * 4);
-		SDL_RenderClear(renderer);
-		SDL_RenderCopy(renderer, texture, NULL, NULL);
+    /* draw buffer to renderer */
+    if (textured)
+    {
+        SDL_UpdateTexture(texture, NULL, buffer, SCREEN_WIDTH * 4);
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, texture, NULL, NULL);
 
-		/* clear buffer */
-		for (x = 0; x < SCREEN_WIDTH; x++)
-			for (y = 0; y < SCREEN_HEIGHT; y++)
-			    buffer[y][x] = 0;
-	}
+        /* clear buffer */
+        for (x = 0; x < SCREEN_WIDTH; x++)
+            for (y = 0; y < SCREEN_HEIGHT; y++)
+                buffer[y][x] = 0;
+    }
 
-	/* update screen */
-	SDL_RenderCopy(renderer, weapon.texture, NULL, &weapon.position);
-	SDL_RenderPresent(renderer);
+    /* Render the weapon */
+    SDL_RenderCopy(renderer, weapon.texture, NULL, &weapon.position);
+
+    /* Render muzzle flash if active */
+    if (muzzleFlashActive)
+    {
+        SDL_Rect flashRect = {weapon.position.x + weapon.position.w / 2 - 32,
+                              weapon.position.y - 32, 64, 64};
+        SDL_RenderCopy(renderer, muzzleFlashTexture, NULL, &flashRect);
+
+        /* Check if muzzle flash duration has passed */
+        if (SDL_GetTicks() >= muzzleFlashEndTime)
+        {
+            muzzleFlashActive = false;
+        }
+    }
+
+    /* update screen */
+    SDL_RenderPresent(renderer);
 }
+
 
 /**
  * closeSDL - closes texture, renderer, and window
@@ -181,6 +212,7 @@ void closeSDL(void)
     }
 
     SDL_DestroyTexture(texture);
+    SDL_DestroyTexture(muzzleFlashTexture); // Clean up muzzle flash texture
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit();
