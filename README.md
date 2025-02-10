@@ -34,7 +34,7 @@ This project is still under development. More features and functions are being t
 ## Installation
 ### Clone the Repository
 ```bash
-git clone https://github.com/Kathyslate/The-Maze.git
+git clone https://github.com/Satson09/Maze-game.git
 ```
 
 ### Ubuntu Focal 20.04 LTS Works Best
