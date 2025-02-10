@@ -133,6 +133,8 @@ After successfully compiling, run the program using the following command:
 - **ESC** : Quit
 - **SPACE** : Shooting
 
+<h3> Game video Link : https://youtu.be/mFxf3RqtrC4 </h3>
+
 ## Source Files
 - **main.c** - Entry point of the game
 - **shootweapon.c** - Weapon handling
